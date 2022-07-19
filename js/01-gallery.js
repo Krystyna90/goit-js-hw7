@@ -15,12 +15,16 @@ function onImageGalleryClick(e) {
     if (e.target.classList.contains('gallery__image')) {
         const modal = basicLightbox.create(`
     <img src="${e.target.dataset.source}" width="800" height="600">
-`)
-      modal.show({ onOpen: window.addEventListener('keydown', onEscapeButtonClick)});
+`,
+          {
+            onShow: () => window.addEventListener('keydown', onEscapeButtonClick),
+            onClose:() => window.removeEventListener('keydown', onEscapeButtonClick)
+        })
+      modal.show();
       
       function onEscapeButtonClick(e) {
         if (e.code === 'Escape') {
-          modal.close({onClose:window.removeEventListener('keydown', onEscapeButtonClick)});
+          modal.close();
         }
   }
   };
